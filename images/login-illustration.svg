@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600">
+
+    <!-- Fundo -->
+    <circle cx="650" cy="120" r="80" fill="#EEF2FF"></circle>
+    <circle cx="120" cy="500" r="100" fill="#EEF2FF"></circle>
+
+    <!-- Painel Kanban -->
+    <rect x="260" y="120" width="420" height="300" rx="24" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"></rect>
+
+    <!-- Título -->
+    <text x="310" y="100" fill="#4F46E5" font-size="24" font-family="Inter, Arial, sans-serif" font-weight="700">
+        ToDo List
+    </text>
+
+    <!-- Coluna 1 -->
+    <rect x="290" y="160" width="90" height="12" rx="6" fill="#4F46E5"></rect>
+
+    <rect x="290" y="190" width="110" height="60" rx="12" fill="#EEF2FF"></rect>
+
+    <rect x="290" y="265" width="110" height="60" rx="12" fill="#EEF2FF"></rect>
+
+    <!-- Coluna 2 -->
+    <rect x="430" y="160" width="90" height="12" rx="6" fill="#4F46E5"></rect>
+
+    <rect x="430" y="190" width="110" height="60" rx="12" fill="#DDEAFE"></rect>
+
+    <rect x="430" y="265" width="110" height="60" rx="12" fill="#DDEAFE"></rect>
+
+    <!-- Coluna 3 -->
+    <rect x="570" y="160" width="90" height="12" rx="6" fill="#4F46E5"></rect>
+
+    <rect x="570" y="190" width="110" height="60" rx="12" fill="#C7D2FE"></rect>
+
+    <!-- Pessoa -->
+
+    <!-- Cabeça -->
+    <circle cx="180" cy="230" r="40" fill="#FFD8B4"></circle>
+
+    <!-- Cabelo -->
+    <path d="M145 220
+           C145 180 215 180 215 220
+           V205
+           C215 165 145 165 145 205
+           Z" fill="#1E293B"></path>
+
+    <!-- Corpo -->
+    <rect x="145" y="270" width="70" height="110" rx="20" fill="#4F46E5"></rect>
+
+    <!-- Braço -->
+    <rect x="210" y="290" width="90" height="16" rx="8" fill="#FFD8B4"></rect>
+
+    <!-- Tablet -->
+    <rect x="260" y="270" width="90" height="60" rx="10" fill="#1E293B"></rect>
+
+    <rect x="270" y="280" width="70" height="40" rx="6" fill="#F8FAFC"></rect>
+
+    <!-- Pernas -->
+    <rect x="155" y="380" width="18" height="90" rx="9" fill="#1E293B"></rect>
+
+    <rect x="188" y="380" width="18" height="90" rx="9" fill="#1E293B"></rect>
+
+    <!-- Card Flutuante -->
+    <rect x="90" y="120" width="110" height="80" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="2"></rect>
+
+    <circle cx="120" cy="155" r="10" fill="#4F46E5"></circle>
+
+    <rect x="140" y="150" width="40" height="10" rx="5" fill="#CBD5E1"></rect>
+
+    <rect x="110" y="175" width="70" height="8" rx="4" fill="#CBD5E1"></rect>
+
+    <!-- Notificação -->
+    <circle cx="650" cy="90" r="30" fill="#4F46E5"></circle>
+
+    <path d="M650 78V92" stroke="white" stroke-width="4" stroke-linecap="round"></path>
+
+    <circle cx="650" cy="102" r="3" fill="white"></circle>
+
+    <!-- Check Principal -->
+    <circle cx="620" cy="420" r="45" fill="#4F46E5"></circle>
+
+    <path d="M600 420
+           L615 435
+           L642 408" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+
+</svg>
