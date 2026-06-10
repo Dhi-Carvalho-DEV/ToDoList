@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo List | Meus Quadros</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- BOOTSTRAP ICONS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <!-- css -->
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/dashboard.css" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div>
+          <div class="logo">
+            <div class="logo-icon">
+              <i class="bi bi-check2-square"></i>
+            </div>
+            <h2>ToDo<span>List</span></h2>
+          </div>
+
+          <nav>
+            <a href="#" class="active">
+              <i class="bi bi-grid"></i>
+              <span>Meus Quadros</span>
+            </a>
+
+            <a href="./tasks.html">
+              <i class="bi bi-check2-square"></i>
+              <span>Minhas Tarefas</span>
+            </a>
+
+            <a href="./agenda.html">
+              <i class="bi bi-calendar-event"></i>
+              <span>Agenda</span>
+            </a>
+
+            <a href="./settings.html">
+              <i class="bi bi-gear"></i>
+              <span>Configurações</span>
+            </a>
+          </nav>
+        </div>
+        <button class="logout-btn">
+          <i class="bi bi-box-arrow-right"></i>
+          Sair
+        </button>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main-content">
+        <!-- HEADER -->
+        <header class="header">
+          <div class="header-info">
+            <h1 id="welcome-user">Olá 👋</h1>
+            <p>Organize seus quadros e acompanhe suas tarefas.</p>
+          </div>
+
+          <div class="header-actions">
+            <button class="icon-btn">
+              <i class="bi bi-search"></i>
+            </button>
+
+            <button class="icon-btn">
+              <i class="bi bi-bell"></i>
+            </button>
+
+            <img
+              src="https://i.pravatar.cc/100?img=12"
+              alt="Usuário"
+              class="avatar"
+            />
+          </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="page-content">
+          <!-- TÍTULO -->
+          <div class="page-header">
+            <div>
+              <h2 class="section-title">Meus Quadros</h2>
+              <p class="section-description">
+                Organize suas tarefas por categorias.
+              </p>
+            </div>
+          </div>
+
+          <!-- RESUMO -->
+          <section class="summary-grid">
+            <article class="summary-card">
+              <span class="summary-number">32</span>
+              <span class="summary-label">Tarefas</span>
+            </article>
+
+            <article class="summary-card">
+              <span class="summary-number">18</span>
+              <span class="summary-label">Concluídas</span>
+            </article>
+
+            <article class="summary-card">
+              <span class="summary-number">14</span>
+              <span class="summary-label">Pendentes</span>
+            </article>
+
+            <article class="summary-card">
+              <span class="summary-number">4</span>
+              <span class="summary-label">Quadros</span>
+            </article>
+          </section>
+
+          <!-- AÇÕES -->
+          <section class="boards-toolbar">
+            <div class="search-box">
+              <i class="bi bi-search"></i>
+              <input type="text" placeholder="Buscar quadros..." />
+            </div>
+            <button class="new-board-btn">
+              <i class="bi bi-plus-lg"></i>
+              Novo Quadro
+            </button>
+          </section>
+
+          <!-- QUADROS -->
+          <section class="boards-grid">
+            <!-- ESTUDOS -->
+            <article class="board-card">
+              <div class="board-icon study">
+                <i class="bi bi-book"></i>
+              </div>
+              <h3>Estudos</h3>
+              <p>8 tarefas</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 75%"></div>
+              </div>
+              <span>75% concluído</span>
+            </article>
+
+            <!-- TRABALHO -->
+            <article class="board-card">
+              <div class="board-icon work">
+                <i class="bi bi-briefcase"></i>
+              </div>
+              <h3>Trabalho</h3>
+              <p>12 tarefas</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 42%"></div>
+              </div>
+              <span>42% concluído</span>
+            </article>
+
+            <!-- CASA -->
+            <article class="board-card">
+              <div class="board-icon home">
+                <i class="bi bi-house"></i>
+              </div>
+              <h3>Casa</h3>
+              <p>6 tarefas</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 90%"></div>
+              </div>
+              <span>90% concluído</span>
+            </article>
+
+            <!-- FINANÇAS -->
+            <article class="board-card">
+              <div class="board-icon finance">
+                <i class="bi bi-cash-stack"></i>
+              </div>
+              <h3>Finanças</h3>
+              <p>6 tarefas</p>
+              <div class="progress-bar">
+                <div class="progress" style="width: 60%"></div>
+              </div>
+              <span>60% concluído</span>
+            </article>
+
+            <!-- NOVO QUADRO -->
+            <article class="board-card add-board">
+              <i class="bi bi-plus-circle"></i>
+              <span>Criar Novo Quadro</span>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <!-- MOBILE NAV -->
+    <nav class="mobile-nav">
+      <a href="#" class="active">
+        <i class="bi bi-grid"></i>
+      </a>
+
+      <a href="./tasks.html">
+        <i class="bi bi-check2-square"></i>
+      </a>
+
+      <a href="./agenda.html">
+        <i class="bi bi-calendar-event"></i>
+      </a>
+
+      <a href="./settings.html">
+        <i class="bi bi-gear"></i>
+      </a>
+    </nav>
+
+    <script src="./js/dashboard.js"></script>
+  </body>
+</html>
