@@ -290,7 +290,7 @@ created_at
 ## Fase 1 — Interface Mobile
 
 - [x] Login
-- [ ] Meus Quadros
+- [x] Meus Quadros
 - [ ] Minhas Tarefas
 - [ ] Agenda
 - [ ] Configurações
