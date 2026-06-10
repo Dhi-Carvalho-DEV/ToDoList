@@ -2,19 +2,6 @@
 const searchInput = document.querySelector(".search-box input");
 const boardCards = document.querySelectorAll(".board-card");
 const addBoardCard = document.querySelector(".add-board");
-const logoutBtn = document.querySelector(".logout-btn");
-const welcomeUser = document.querySelector("#welcome-user");
-
-/* Verifica Login */
-const user = JSON.parse(localStorage.getItem("user"));
-
-if (welcomeUser && user) {
-  welcomeUser.textContent = `Olá, ${user.name} 👋`;
-}
-
-if (!user || !user.authenticated) {
-  window.location.href = "login.html";
-}
 
 /* Busca de Quadros */
 if (searchInput) {
@@ -52,20 +39,6 @@ if (addBoardCard) {
 
     alert(`Quadro "${boardName}" criado!`);
     location.reload();
-  });
-}
-
-/* Logout */
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", () => {
-    console.log("logout clicado");
-    const confirmLogout = confirm("Deseja realmente sair?");
-
-    if (!confirmLogout) return;
-
-    localStorage.removeItem("user");
-
-    window.location.href = "index.html";
   });
 }
 
