@@ -33,8 +33,8 @@ loginForm?.addEventListener("submit", (event) => {
 
   // Simulação de usuário
   const user = {
-    name: "Diogo",
-    email: email,
+    name: email.split("@")[0],
+    email,
     authenticated: true,
   };
 
@@ -44,6 +44,6 @@ loginForm?.addEventListener("submit", (event) => {
 
   // Redirecionamento
   setTimeout(() => {
-    window.location.href = "./dashboard.html";
+    window.location.href = "dashboard.html";
   }, 1000);
 });
