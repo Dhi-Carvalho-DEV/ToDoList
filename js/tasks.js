@@ -1,6 +1,7 @@
 /* Elementos */
 const tasksList = document.querySelector("#tasks-list");
 const newTaskBtn = document.querySelector("#new-task-btn");
+const filterButtons = document.querySelectorAll(".filter");
 
 /* Modal */
 const taskModal = document.querySelector("#task-modal");
@@ -13,6 +14,35 @@ const taskCategoryInput = document.querySelector("#task-category");
 const taskPriorityInput = document.querySelector("#task-priority");
 const taskDateInput = document.querySelector("#task-date");
 
+/* Tasks */
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let editingTaskId = null;
+let currentFilter = "all";
+
+/* Filtros */
+filterButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    filterButtons.forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active");
+
+    const text = button.textContent.trim();
+
+    if (text === "Todas") {
+      currentFilter = "all";
+    }
+
+    if (text === "Pendentes") {
+      currentFilter = "pending";
+    }
+
+    if (text === "Concluídas") {
+      currentFilter = "completed";
+    }
+
+    renderTasks();
+  });
+});
+
 function openModal() {
   taskModal.classList.remove("hidden");
 }
@@ -20,6 +50,9 @@ function openModal() {
 function closeModal() {
   taskModal.classList.add("hidden");
   taskForm.reset();
+
+  editingTaskId = null;
+  document.querySelector("#modal-title").textContent = "Nova Tarefa";
 }
 
 if (newTaskBtn) {
@@ -35,12 +68,24 @@ taskModal?.addEventListener("click", (event) => {
   }
 });
 
-/* Tasks */
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
 /* Salvar */
 function saveTasks() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function editTask(id) {
+  const task = tasks.find((task) => task.id === id);
+  if (!task) return;
+
+  editingTaskId = id;
+  taskTitleInput.value = task.title;
+  taskCategoryInput.value = task.category;
+  taskPriorityInput.value = task.priority;
+  taskDateInput.value = task.dueDate || "";
+
+  document.querySelector("#modal-title").textContent = "Editar Tarefa";
+
+  openModal();
 }
 
 /* Helpers */
@@ -106,19 +151,6 @@ function toggleTask(id) {
   renderTasks();
 }
 
-function editTask(id) {
-  const task = tasks.find((task) => task.id === id);
-
-  if (!task) return;
-
-  const newTitle = prompt("Editar tarefa:", task.title);
-
-  if (!newTitle) return;
-
-  saveTasks();
-  renderTasks();
-}
-
 function deleteTask(id) {
   const confirmDelete = confirm("Excluir tarefa?");
 
@@ -134,37 +166,52 @@ function deleteTask(id) {
 function renderTasks() {
   tasksList.innerHTML = "";
 
-  if (tasks.length === 0) {
+  let filteredTasks = [...tasks];
+
+  if (currentFilter === "pending") {
+    filteredTasks = tasks.filter((task) => !task.completed);
+  }
+
+  if (currentFilter === "completed") {
+    filteredTasks = tasks.filter((task) => task.completed);
+  }
+
+  if (filteredTasks.length === 0) {
     tasksList.innerHTML = `
       <div class="empty-state">
-        <h3>Nenhuma tarefa cadastrada</h3>
-        <p>Clique em "Nova Tarefa"</p>
+        <h3>Nenhuma tarefa encontrada</h3>
+        <p>Tente outro filtro</p>
       </div>
     `;
     return;
   }
 
-  tasks.forEach((task) => {
+  filteredTasks.forEach((task) => {
     const card = document.createElement("article");
 
     card.className = task.completed ? "task-card completed" : "task-card";
 
     card.innerHTML = `
       <div class="task-check">
-        <input type="checkbox" ${task.completed ? "checked" : ""} />
+        <input type="checkbox" ${task.completed ? "checked" : ""}>
       </div>
 
       <div class="task-content">
         <h3>${task.title}</h3>
+
         <div class="task-meta">
           <span class="task-category ${task.category}">
             ${getCategoryLabel(task.category)}
           </span>
+
           <span class="task-priority ${task.priority}">
             ${getPriorityLabel(task.priority)}
           </span>
         </div>
-        <p class="task-date">${task.dueDate || "Sem prazo"}</p>
+
+        <p class="task-date">
+          ${task.dueDate || "Sem prazo"}
+        </p>
       </div>
 
       <div class="task-actions">
@@ -207,12 +254,29 @@ taskForm?.addEventListener("submit", (event) => {
 
   if (!title) return;
 
-  createTask({
+  const formData = {
     title,
     category: taskCategoryInput.value,
     priority: taskPriorityInput.value,
     dueDate: taskDateInput.value,
-  });
+  };
+
+  if (editingTaskId !== null) {
+    tasks = tasks.map((task) => {
+      if (task.id === editingTaskId) {
+        return {
+          ...task,
+          ...formData,
+        };
+      }
+      return task;
+    });
+
+    saveTasks();
+    renderTasks();
+  } else {
+    createTask(formData);
+  }
 
   closeModal();
 });
