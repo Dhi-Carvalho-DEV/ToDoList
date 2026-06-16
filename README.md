@@ -291,7 +291,7 @@ created_at
 
 - [x] Login
 - [x] Meus Quadros
-- [ ] Minhas Tarefas
+- [x] Minhas Tarefas
 - [ ] Agenda
 - [ ] Configurações
 
