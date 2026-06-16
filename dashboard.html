@@ -101,22 +101,22 @@
           <!-- RESUMO -->
           <section class="summary-grid">
             <article class="summary-card">
-              <span class="summary-number">32</span>
+              <span id="tasks-count" class="summary-number">32</span>
               <span class="summary-label">Tarefas</span>
             </article>
 
             <article class="summary-card">
-              <span class="summary-number">18</span>
+              <span id="completed-count" class="summary-number">18</span>
               <span class="summary-label">Concluídas</span>
             </article>
 
             <article class="summary-card">
-              <span class="summary-number">14</span>
+              <span id="pending-count" class="summary-number">14</span>
               <span class="summary-label">Pendentes</span>
             </article>
 
             <article class="summary-card">
-              <span class="summary-number">4</span>
+              <span id="boards-count" class="summary-number">4</span>
               <span class="summary-label">Quadros</span>
             </article>
           </section>
@@ -127,72 +127,10 @@
               <i class="bi bi-search"></i>
               <input type="text" placeholder="Buscar quadros..." />
             </div>
-            <button class="new-board-btn">
-              <i class="bi bi-plus-lg"></i>
-              Novo Quadro
-            </button>
           </section>
 
           <!-- QUADROS -->
-          <section class="boards-grid">
-            <!-- ESTUDOS -->
-            <article class="board-card">
-              <div class="board-icon study">
-                <i class="bi bi-book"></i>
-              </div>
-              <h3>Estudos</h3>
-              <p>8 tarefas</p>
-              <div class="progress-bar">
-                <div class="progress" style="width: 75%"></div>
-              </div>
-              <span>75% concluído</span>
-            </article>
-
-            <!-- TRABALHO -->
-            <article class="board-card">
-              <div class="board-icon work">
-                <i class="bi bi-briefcase"></i>
-              </div>
-              <h3>Trabalho</h3>
-              <p>12 tarefas</p>
-              <div class="progress-bar">
-                <div class="progress" style="width: 42%"></div>
-              </div>
-              <span>42% concluído</span>
-            </article>
-
-            <!-- CASA -->
-            <article class="board-card">
-              <div class="board-icon home">
-                <i class="bi bi-house"></i>
-              </div>
-              <h3>Casa</h3>
-              <p>6 tarefas</p>
-              <div class="progress-bar">
-                <div class="progress" style="width: 90%"></div>
-              </div>
-              <span>90% concluído</span>
-            </article>
-
-            <!-- FINANÇAS -->
-            <article class="board-card">
-              <div class="board-icon finance">
-                <i class="bi bi-cash-stack"></i>
-              </div>
-              <h3>Finanças</h3>
-              <p>6 tarefas</p>
-              <div class="progress-bar">
-                <div class="progress" style="width: 60%"></div>
-              </div>
-              <span>60% concluído</span>
-            </article>
-
-            <!-- NOVO QUADRO -->
-            <article class="board-card add-board">
-              <i class="bi bi-plus-circle"></i>
-              <span>Criar Novo Quadro</span>
-            </article>
-          </section>
+          <section class="boards-grid" id="boards-grid"></section>
         </section>
       </main>
     </div>
