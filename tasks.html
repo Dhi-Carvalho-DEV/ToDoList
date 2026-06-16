@@ -101,22 +101,22 @@
           <!-- RESUMO -->
           <section class="summary-grid">
             <article class="summary-card">
-              <span class="summary-number">32</span>
+              <span class="summary-number" id="total-tasks">32</span>
               <span class="summary-label">Total</span>
             </article>
 
             <article class="summary-card">
-              <span class="summary-number">18</span>
+              <span class="summary-number" id="completed-tasks">18</span>
               <span class="summary-label">Concluídas</span>
             </article>
 
             <article class="summary-card">
-              <span class="summary-number">14</span>
+              <span class="summary-number" id="pending-tasks">14</span>
               <span class="summary-label">Pendentes</span>
             </article>
 
             <article class="summary-card">
-              <span class="summary-number">4</span>
+              <span class="summary-number" id="categories-count">4</span>
               <span class="summary-label">Categorias</span>
             </article>
           </section>
@@ -132,6 +132,12 @@
               <button class="filter" data-filter="pending">Pendentes</button>
               <button class="filter" data-filter="completed">Concluídas</button>
             </div>
+            <select id="sort-tasks" class="sort-select">
+              <option value="newest">Mais recentes</option>
+              <option value="oldest">Mais antigas</option>
+              <option value="priority">Prioridade</option>
+              <option value="deadline">Prazo</option>
+            </select>
             <button class="new-task-btn" id="new-task-btn">
               <i class="bi bi-plus-lg"></i>
               Nova Tarefa
