@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDo List | Minhas Tarefas</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- BOOTSTRAP ICONS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <!-- css -->
+    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./css/agenda.css" />
+  </head>
+  <body>
+    <div class="app-layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div>
+          <div class="logo">
+            <div class="logo-icon">
+              <i class="bi bi-check2-square"></i>
+            </div>
+            <h2>ToDo<span>List</span></h2>
+          </div>
+
+          <nav>
+            <a href="./dashboard.html">
+              <i class="bi bi-grid"></i>
+              <span>Meus Quadros</span>
+            </a>
+
+            <a href="./tasks.html">
+              <i class="bi bi-check2-square"></i>
+              <span>Minhas Tarefas</span>
+            </a>
+
+            <a href="./agenda.html" class="active">
+              <i class="bi bi-calendar-event"></i>
+              <span>Agenda</span>
+            </a>
+
+            <a href="./settings.html">
+              <i class="bi bi-gear"></i>
+              <span>Configurações</span>
+            </a>
+          </nav>
+        </div>
+        <button class="logout-btn">
+          <i class="bi bi-box-arrow-right"></i>
+          Sair
+        </button>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="main-content">
+        <!-- HEADER -->
+        <header class="header">
+          <div class="header-info">
+            <h1 id="welcome-user">Olá 👋</h1>
+            <p>Organize seus quadros e acompanhe suas tarefas.</p>
+          </div>
+
+          <div class="header-actions">
+            <button class="icon-btn">
+              <i class="bi bi-search"></i>
+            </button>
+
+            <button class="icon-btn">
+              <i class="bi bi-bell"></i>
+            </button>
+
+            <img
+              src="https://i.pravatar.cc/100?img=12"
+              alt="Usuário"
+              class="avatar"
+            />
+          </div>
+        </header>
+
+        <!-- CONTEÚDO -->
+        <section class="page-content">
+          <!-- TÍTULO -->
+          <div class="page-header">
+            <div>
+              <h2 class="section-title">Agenda</h2>
+              <p class="section-description">
+                Visualize seus compromissos e tarefas por dia.
+              </p>
+            </div>
+          </div>
+
+          <!-- RESUMO -->
+          <section class="summary-grid">
+            <article class="summary-card">
+              <span class="summary-number" id="appointments-count">0</span>
+              <span class="summary-label">Compromissos</span>
+            </article>
+
+            <article class="summary-card">
+              <span class="summary-number" id="hours-count">0h</span>
+              <span class="summary-label">Horas Planejadas</span>
+            </article>
+
+            <article class="summary-card">
+              <span class="summary-number" id="completed-count">0</span>
+              <span class="summary-label">Concluídos</span>
+            </article>
+
+            <article class="summary-card">
+              <span class="summary-number" id="pending-count">0</span>
+              <span class="summary-label">Pendentes</span>
+            </article>
+          </section>
+
+          <!-- AÇÕES -->
+          <section class="agenda-toolbar">
+            <button id="today-btn" class="today-btn">Hoje</button>
+
+            <div class="search-box">
+              <i class="bi bi-search"></i>
+              <input type="text" placeholder="Pesquisar compromisso..." />
+            </div>
+
+            <button id="new-appointment-btn" class="new-btn">
+              <i class="bi bi-plus-lg"></i>
+              Novo Compromisso
+            </button>
+          </section>
+
+          <!-- CONTEÚDO -->
+          <section class="agenda-layout">
+            <!-- TIMELINE -->
+            <div class="timeline-card">
+              <div class="card-header">
+                <h3 id="selected-date">Hoje</h3>
+              </div>
+
+              <div id="appointments-list">
+                <!-- Renderizado pelo JS -->
+              </div>
+            </div>
+
+            <!-- SIDEBAR -->
+            <aside class="agenda-sidebar">
+              <div class="calendar-card">
+                <h3 id="month-year">Junho 2026</h3>
+                <div id="calendar-grid"></div>
+              </div>
+
+              <div class="upcoming-card">
+                <h3>Próximos Compromissos</h3>
+                <div id="upcoming-list"></div>
+              </div>
+            </aside>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <!-- MOBILE NAV -->
+    <nav class="mobile-nav">
+      <a href="./dashboard.html">
+        <i class="bi bi-grid"></i>
+      </a>
+
+      <a href="./tasks.html">
+        <i class="bi bi-check2-square"></i>
+      </a>
+
+      <a href="#" class="active">
+        <i class="bi bi-calendar-event"></i>
+      </a>
+
+      <a href="./settings.html">
+        <i class="bi bi-gear"></i>
+      </a>
+    </nav>
+
+    <!-- Modal Nova Compromisso -->
+    <div id="appointment-modal" class="modal hidden">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Novo Compromisso</h2>
+          <button id="close-modal">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <form id="appointment-form">
+          <div class="form-group">
+            <label>Título</label>
+            <input type="text" id="appointment-title" required />
+          </div>
+
+          <div class="form-group">
+            <label>Categoria</label>
+
+            <select id="appointment-category">
+              <option value="study">Estudos</option>
+              <option value="work">Trabalho</option>
+              <option value="home">Casa</option>
+              <option value="finance">Finanças</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Data</label>
+            <input type="date" id="appointment-date" />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Hora Inicial</label>
+              <input type="time" id="start-time" />
+            </div>
+
+            <div class="form-group">
+              <label>Hora Final</label>
+              <input type="time" id="end-time" />
+            </div>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" id="cancel-appointment">Cancelar</button>
+            <button type="submit">Salvar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="./js/app.js"></script>
+    <script src="./js/agenda.js"></script>
+  </body>
+</html>

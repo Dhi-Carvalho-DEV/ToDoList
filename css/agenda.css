@@ -1,0 +1,321 @@
+/* HEADER */
+.page-header {
+  margin-bottom: 24px;
+}
+
+/* RESUMO */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.summary-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+}
+
+.summary-number {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.summary-label {
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* TOOLBAR */
+.agenda-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.today-btn,
+.new-btn {
+  height: 52px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.today-btn {
+  background: var(--surface);
+  color: var(--text-primary);
+}
+
+.new-btn {
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.new-btn:hover {
+  background: var(--primary-dark);
+}
+
+/* BUSCA */
+.search-box {
+  height: 52px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.search-box i {
+  color: var(--text-secondary);
+}
+
+/* LAYOUT */
+.agenda-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+/* TIMELINE */
+.timeline-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+  margin-bottom: 24px;
+}
+
+.card-header h3 {
+  font-size: 1.2rem;
+}
+
+/* EVENTOS */
+.appointment-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  margin-bottom: 12px;
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--primary);
+  background: rgba(79, 70, 229, 0.05);
+}
+
+.appointment-info h4 {
+  margin-bottom: 4px;
+}
+
+.appointment-info p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.appointment-time {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* SIDEBAR */
+.agenda-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.calendar-card,
+.upcoming-card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* CALENDÁRIO */
+#month-year {
+  margin-bottom: 20px;
+}
+
+#calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+}
+
+.calendar-day {
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.calendar-day:hover {
+  background: rgba(79, 70, 229, 0.08);
+}
+
+.calendar-day.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* PRÓXIMOS */
+.upcoming-item {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.upcoming-item:last-child {
+  border-bottom: none;
+}
+
+.upcoming-item h4 {
+  margin-bottom: 4px;
+}
+
+.upcoming-item span {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal-content {
+  width: 95%;
+  max-width: 500px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.modal-header button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  height: 48px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0 12px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-actions {
+  margin-top: 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modal-actions button {
+  height: 46px;
+  padding: 0 20px;
+
+  border: none;
+  border-radius: var(--radius-md);
+
+  cursor: pointer;
+}
+
+.modal-actions button[type="submit"] {
+  background: var(--primary);
+  color: white;
+}
+
+/* TABLET */
+@media (min-width: 768px) {
+  .summary-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .agenda-toolbar {
+    flex-direction: row;
+  }
+
+  .search-box {
+    flex: 1;
+  }
+
+  .today-btn {
+    width: 120px;
+  }
+
+  .new-btn {
+    width: 220px;
+  }
+}
+
+/* DESKTOP */
+@media (min-width: 1024px) {
+  .agenda-layout {
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .page-content {
+    padding: 32px;
+  }
+}
