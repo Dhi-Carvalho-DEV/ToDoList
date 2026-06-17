@@ -157,8 +157,9 @@ function getPriorityLabel(priority) {
 
 function formatDate(date) {
   if (!date) return "Sem prazo";
+  const [year, month, day] = date.split("-");
 
-  return new Date(date).toLocaleDateString("pt-BR");
+  return `${day}/${month}/${year}`;
 }
 
 /* Crud */
