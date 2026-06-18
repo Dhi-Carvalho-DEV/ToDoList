@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ToDo List | Minhas Tarefas</title>
+    <title>ToDo List | Agenda</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -102,7 +102,7 @@
           <section class="summary-grid">
             <article class="summary-card">
               <span class="summary-number" id="appointments-count">0</span>
-              <span class="summary-label">Compromissos</span>
+              <span class="summary-label">Tarefas</span>
             </article>
 
             <article class="summary-card">
@@ -124,10 +124,12 @@
           <!-- AÇÕES -->
           <section class="agenda-toolbar">
             <button id="today-btn" class="today-btn">Hoje</button>
-
+            <button id="clear-filter-btn" class="secondary-btn">
+              Mostrar Todas
+            </button>
             <div class="search-box">
               <i class="bi bi-search"></i>
-              <input type="text" placeholder="Pesquisar compromisso..." />
+              <input type="text" placeholder="Pesquisar tarefa..." />
             </div>
           </section>
 
@@ -152,7 +154,7 @@
               </div>
 
               <div class="upcoming-card">
-                <h3>Próximos Compromissos</h3>
+                <h3>Próximas Tarefas</h3>
                 <div id="upcoming-list"></div>
               </div>
             </aside>

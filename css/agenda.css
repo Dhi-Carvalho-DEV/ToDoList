@@ -41,7 +41,7 @@
 }
 
 .today-btn,
-.new-btn {
+.secondary-btn {
   height: 52px;
   border: none;
   border-radius: var(--radius-md);
@@ -49,22 +49,10 @@
   cursor: pointer;
 }
 
-.today-btn {
+.today-btn,
+.secondary-btn {
   background: var(--surface);
   color: var(--text-primary);
-}
-
-.new-btn {
-  background: var(--primary);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
-.new-btn:hover {
-  background: var(--primary-dark);
 }
 
 /* BUSCA */
@@ -125,6 +113,15 @@
   background: rgba(79, 70, 229, 0.05);
 }
 
+.appointment-card.completed {
+  opacity: 0.7;
+  border-left-color: #10b981;
+}
+
+.appointment-card.completed h4 {
+  text-decoration: line-through;
+}
+
 .appointment-info h4 {
   margin-bottom: 4px;
 }
@@ -134,9 +131,21 @@
   font-size: 0.9rem;
 }
 
+.appointment-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
 .appointment-time {
   font-weight: 600;
   color: var(--primary);
+}
+
+.appointment-hours {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
 }
 
 /* SIDEBAR */
@@ -152,6 +161,25 @@
   border-radius: var(--radius-lg);
   padding: 24px;
   box-shadow: var(--shadow-sm);
+}
+
+.upcoming-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+.upcoming-hours {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.upcoming-hours i {
+  font-size: 0.8rem;
 }
 
 /* CALENDÁRIO */
@@ -176,12 +204,22 @@
 }
 
 .calendar-day:hover {
-  background: rgba(79, 70, 229, 0.08);
+  background: rgba(99, 102, 241, 0.1);
 }
 
 .calendar-day.active {
   background: var(--primary);
   color: white;
+}
+
+.calendar-day.selected {
+  background: var(--primary);
+  color: white;
+  font-weight: 700;
+}
+
+.calendar-day.selected::after {
+  background: white;
 }
 
 .calendar-day.has-event {
@@ -198,6 +236,18 @@
   bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
+}
+
+.calendar-day.priority-high::after {
+  background: #ef4444;
+}
+
+.calendar-day.priority-medium::after {
+  background: #f59e0b;
+}
+
+.calendar-day.priority-low::after {
+  background: #22c55e;
 }
 
 /* PRÓXIMOS */
@@ -316,12 +366,9 @@
     flex: 1;
   }
 
-  .today-btn {
+  .today-btn,
+  .secondary-btn {
     width: 120px;
-  }
-
-  .new-btn {
-    width: 220px;
   }
 }
 

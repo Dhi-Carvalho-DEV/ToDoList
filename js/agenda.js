@@ -4,6 +4,9 @@ const appointmentsCountEl = document.querySelector("#appointments-count");
 const hoursCountEl = document.querySelector("#hours-count");
 const completedCountEl = document.querySelector("#completed-count");
 const pendingCountEl = document.querySelector("#pending-count");
+const todayBtn = document.querySelector("#today-btn");
+const selectedDateEl = document.querySelector("#selected-date");
+const clearFilterBtn = document.querySelector("#clear-filter-btn");
 const searchInput = document.querySelector(".search-box input");
 
 /* ELEMENTOS DO CALENDÁRIO */
@@ -12,6 +15,41 @@ const monthYear = document.querySelector("#month-year");
 
 /* DADOS */
 let searchTerm = "";
+let selectedDate = null;
+
+/* BUTTONS */
+todayBtn?.addEventListener("click", () => {
+  const today = new Date();
+
+  selectedDate =
+    `${today.getFullYear()}-` +
+    `${String(today.getMonth() + 1).padStart(2, "0")}-` +
+    `${String(today.getDate()).padStart(2, "0")}`;
+
+  document.querySelectorAll(".calendar-day").forEach((el) => {
+    el.classList.remove("selected");
+
+    if (el.dataset.date === selectedDate) {
+      el.classList.add("selected");
+    }
+  });
+
+  selectedDateEl.textContent = "Hoje";
+
+  renderTasks();
+});
+
+clearFilterBtn?.addEventListener("click", () => {
+  selectedDate = null;
+
+  document.querySelectorAll(".calendar-day").forEach((day) => {
+    day.classList.remove("selected");
+  });
+
+  selectedDateEl.textContent = "Todas as tarefas";
+
+  renderTasks();
+});
 
 /* BUSCA */
 searchInput?.addEventListener("input", (event) => {
@@ -56,6 +94,10 @@ function renderTasks() {
 
   let tasks = getTasks();
 
+  if (selectedDate) {
+    tasks = tasks.filter((task) => task.dueDate === selectedDate);
+  }
+
   if (searchTerm) {
     tasks = tasks.filter((task) =>
       task.title.toLowerCase().includes(searchTerm),
@@ -84,13 +126,26 @@ function renderTasks() {
     card.innerHTML = `
       <div class="appointment-info">
         <h4>${task.title}</h4>
-        <p>${getCategoryLabel(task.category)}</p>
+        <p>${getCategoryLabel(task.category)}
+           •
+          ${
+            task.priority === "high"
+              ? "🔴 Alta"
+              : task.priority === "medium"
+                ? "🟡 Média"
+                : "🟢 Baixa"
+          }
+        </p>
       </div>
 
-      <div>
+      <div class="appointment-meta">
         <span class="appointment-time">
           ${formatDate(task.dueDate) || "Sem prazo"}
         </span>
+        <small class="appointment-hours">
+          <i class="bi bi-clock"></i>
+          ${task.startTime || "--:--"} - ${task.endTime || "--:--"}
+        </small>
       </div>
     `;
 
@@ -154,8 +209,14 @@ function renderUpcoming() {
 
     item.innerHTML = `
       <h4>📌 ${task.title}</h4>
-      <span>${formatDate(task.dueDate)}</span>
-      <small>${task.startTime || "--:--"} - ${task.endTime || "--:--"}</small>
+      <div class="upcoming-meta">
+        <span>${formatDate(task.dueDate)}</span>
+        <span>•</span>
+        <span class="upcoming-hours">
+          <i class="bi bi-clock"></i>
+          ${task.startTime || "--:--"} - ${task.endTime || "--:--"}
+        </span>
+      </div>
     `;
 
     container.appendChild(item);
@@ -193,11 +254,34 @@ function renderCalendar() {
     dayEl.textContent = day;
 
     const currentDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+    dayEl.dataset.date = currentDate;
 
-    const hasTask = tasks.some((task) => task.dueDate === currentDate);
+    dayEl.addEventListener("click", () => {
+      selectedDate = currentDate;
+      document.querySelectorAll(".calendar-day").forEach((el) => {
+        el.classList.remove("selected");
+      });
 
-    if (hasTask) {
+      dayEl.classList.add("selected");
+      selectedDateEl.textContent = formatDate(currentDate);
+
+      renderTasks();
+    });
+
+    const dayTasks = tasks.filter((task) => task.dueDate === currentDate);
+
+    if (dayTasks.length > 0) {
       dayEl.classList.add("has-event");
+      const hasHigh = dayTasks.some((task) => task.priority === "high");
+      const hasMedium = dayTasks.some((task) => task.priority === "medium");
+
+      if (hasHigh) {
+        dayEl.classList.add("priority-high");
+      } else if (hasMedium) {
+        dayEl.classList.add("priority-medium");
+      } else {
+        dayEl.classList.add("priority-low");
+      }
     }
 
     calendarGrid.appendChild(dayEl);
@@ -205,6 +289,7 @@ function renderCalendar() {
 }
 
 /* INIT */
+selectedDateEl.textContent = "Todas as tarefas";
 renderTasks();
 renderUpcoming();
 updateSummary();
