@@ -6,78 +6,17 @@ const completedCountEl = document.querySelector("#completed-count");
 const pendingCountEl = document.querySelector("#pending-count");
 const searchInput = document.querySelector(".search-box input");
 
-/* ELEMENTOS DO MODAL */
-const modal = document.querySelector("#appointment-modal");
-const newAppointmentBtn = document.querySelector("#new-appointment-btn");
-const closeModalBtn = document.querySelector("#close-modal");
-const cancelBtn = document.querySelector("#cancel-appointment");
-const appointmentForm = document.querySelector("#appointment-form");
-
-/* ELEMENTOS DO FORM */
-const titleInput = document.querySelector("#appointment-title");
-const categoryInput = document.querySelector("#appointment-category");
-const dateInput = document.querySelector("#appointment-date");
-const startTimeInput = document.querySelector("#start-time");
-const endTimeInput = document.querySelector("#end-time");
-
 /* ELEMENTOS DO CALENDÁRIO */
 const calendarGrid = document.querySelector("#calendar-grid");
 const monthYear = document.querySelector("#month-year");
 
 /* DADOS */
-let appointments = JSON.parse(localStorage.getItem("appointtments")) || [];
 let searchTerm = "";
-
-/* FUNÇÃO MODAL */
-function openModal() {
-  modal.classList.remove("hidden");
-}
-
-function closeModal() {
-  modal.classList.add("hidden");
-  appointmentForm.reset();
-}
-
-newAppointmentBtn?.addEventListener("click", openModal);
-closeModalBtn?.addEventListener("click", closeModal);
-cancelBtn?.addEventListener("click", closeModal);
-modal?.addEventListener("click", (event) => {
-  if (event.target === modal) {
-    closeModal();
-  }
-});
-
-/* STORAGE */
-function saveAppointments() {
-  localStorage.setItem("appointments", JSON.stringify(appointments));
-}
-
-/* FORM */
-appointmentForm?.addEventListener("submit", (event) => {
-  event.preventDefault();
-
-  const appointment = {
-    id: Date.now(),
-    title: titleInput.value,
-    category: categoryInput.value,
-    date: dateInput.value,
-    startTime: startTimeInput.value,
-    endTime: endTimeInput.value,
-    completed: false,
-  };
-
-  appointments.push(appointment);
-  saveAppointments();
-  updateSummary();
-  renderUpcoming();
-
-  closeModal();
-});
 
 /* BUSCA */
 searchInput?.addEventListener("input", (event) => {
   searchTerm = event.target.value.toLowerCase();
-  renderAppointments();
+  renderTasks();
 });
 
 /* HELPERS */
@@ -85,111 +24,115 @@ function getCategoryLabel(category) {
   switch (category) {
     case "study":
       return "Estudos";
+
     case "work":
       return "Trabalho";
+
     case "home":
       return "Casa";
+
     case "finance":
       return "Finanças";
+
     default:
       return "Outros";
   }
 }
 
-/* RENDER */
-function renderAppointments() {
+function getTasks() {
+  return JSON.parse(localStorage.getItem("tasks")) || [];
+}
+
+function formatDate(date) {
+  if (!date) return "Sem prazo";
+  const [year, month, day] = date.split("-");
+
+  return `${day}/${month}/${year}`;
+}
+
+/* LISTA DE TAREFAS */
+function renderTasks() {
   appointmentsList.innerHTML = "";
 
-  let filtered = [...appointments];
+  let tasks = getTasks();
 
   if (searchTerm) {
-    filtered = filtered.filter((appointment) =>
-      appointment.title.toLowerCase().includes(searchTerm),
+    tasks = tasks.filter((task) =>
+      task.title.toLowerCase().includes(searchTerm),
     );
   }
 
-  if (filtered.length === 0) {
+  tasks = tasks.sort(
+    (a, b) =>
+      new Date(a.dueDate || "9999-12-31") - new Date(b.dueDate || "9999-12-31"),
+  );
+
+  if (tasks.length === 0) {
     appointmentsList.innerHTML = `
-      <p>Nenhum compromisso encontrado.</p>
+      <p>Nenhuma tarefa encontrada.</p>
     `;
     return;
   }
 
-  filtered
-    .sort((a, b) => a.startTime.localeCompare(b.startTime))
-    .forEach((appointment) => {
-      const card = document.createElement("div");
-      card.className = "appointment-card";
-      card.innerHTML = `
-        <div class="appointment-info">
-          <h4>${appointment.title}</h4>
-          <p>${getCategoryLabel(appointment.category)}</p>
-        </div>
+  tasks.forEach((task) => {
+    const card = document.createElement("div");
 
-        <div>
-          <span class="appointment-time">
-            ${appointment.startTime} - ${appointment.endTime}
-          </span>
-          <button class="delete-btn" data-id="${appointment.id}">
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>
-      `;
+    card.className = task.completed
+      ? "appointment-card completed"
+      : "appointment-card";
 
-      appointmentsList.appendChild(card);
-    });
+    card.innerHTML = `
+      <div class="appointment-info">
+        <h4>${task.title}</h4>
+        <p>${getCategoryLabel(task.category)}</p>
+      </div>
 
-  document.querySelectorAll(".delete-btn").forEach((button) => {
-    button.addEventListener("click", () => {
-      deleteAppointment(Number(button.dataset.id));
-    });
+      <div>
+        <span class="appointment-time">
+          ${formatDate(task.dueDate) || "Sem prazo"}
+        </span>
+      </div>
+    `;
+
+    appointmentsList.appendChild(card);
   });
-}
-
-/* DELETE */
-function deleteAppointment(id) {
-  const confirmDelete = confirm("Excluir compromisso?");
-
-  if (!confirmDelete) return;
-
-  appointments = appointments.filter((appointment) => appointment.id !== id);
-
-  saveAppointments();
-  renderAppointments();
-  renderUpcoming();
-  updateSummary();
 }
 
 /* ESTATÍSTICAS */
 function updateSummary() {
-  const total = appointments.length;
+  const tasks = getTasks();
 
-  const completed = appointments.filter(
-    (appointment) => appointment.completed,
-  ).length;
+  const total = tasks.length;
 
-  const pending = appointments.filter(
-    (appointment) => !appointment.completed,
-  ).length;
+  const completed = tasks.filter((task) => task.completed).length;
+
+  const pending = tasks.filter((task) => !task.completed).length;
 
   let totalMinutes = 0;
 
-  appointments.forEach((appointment) => {
-    const [sh, sm] = appointment.startTime.split(":").map(Number);
-    const [eh, em] = appointment.endTime.split(":").map(Number);
+  tasks.forEach((task) => {
+    if (!task.startTime || !task.endTime) return;
 
-    totalMinutes += eh * 60 + em - (sh * 60 + sm);
+    const [sh, sm] = task.startTime.split(":").map(Number);
+    const [eh, em] = task.endTime.split(":").map(Number);
+
+    const start = sh * 60 + sm;
+    const end = eh * 60 + em;
+
+    totalMinutes += end - start;
   });
 
   const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
 
   appointmentsCountEl.textContent = total;
   completedCountEl.textContent = completed;
   pendingCountEl.textContent = pending;
-  hoursCountEl.textContent = `${hours}h`;
+
+  hoursCountEl.textContent = `${hours}h ${minutes}min`;
 }
 
-/* PRÓXIMOS */
+/* PRÓXIMAS TAREFAS */
 function renderUpcoming() {
   const container = document.querySelector("#upcoming-list");
 
@@ -197,18 +140,22 @@ function renderUpcoming() {
 
   container.innerHTML = "";
 
-  const upcoming = [...appointments]
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
+  const tasks = getTasks();
+
+  const upcoming = tasks
+    .filter((task) => task.dueDate)
+    .sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate))
     .slice(0, 5);
 
-  upcoming.forEach((appointment) => {
+  upcoming.forEach((task) => {
     const item = document.createElement("div");
 
     item.className = "upcoming-item";
 
     item.innerHTML = `
-      <h4>${appointment.title}</h4>
-      <span>${appointment.date} • ${appointment.startTime}</span>
+      <h4>📌 ${task.title}</h4>
+      <span>${formatDate(task.dueDate)}</span>
+      <small>${task.startTime || "--:--"} - ${task.endTime || "--:--"}</small>
     `;
 
     container.appendChild(item);
@@ -232,6 +179,8 @@ function renderCalendar() {
 
   const totalDays = new Date(year, month + 1, 0).getDate();
 
+  const tasks = getTasks();
+
   for (let day = 1; day <= totalDays; day++) {
     const dayEl = document.createElement("div");
 
@@ -243,12 +192,20 @@ function renderCalendar() {
 
     dayEl.textContent = day;
 
+    const currentDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
+    const hasTask = tasks.some((task) => task.dueDate === currentDate);
+
+    if (hasTask) {
+      dayEl.classList.add("has-event");
+    }
+
     calendarGrid.appendChild(dayEl);
   }
 }
 
 /* INIT */
-renderAppointments();
+renderTasks();
 renderUpcoming();
 updateSummary();
 renderCalendar();

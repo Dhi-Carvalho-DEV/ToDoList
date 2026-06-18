@@ -20,6 +20,8 @@ const taskTitleInput = document.querySelector("#task-title");
 const taskCategoryInput = document.querySelector("#task-category");
 const taskPriorityInput = document.querySelector("#task-priority");
 const taskDateInput = document.querySelector("#task-date");
+const taskStartTimeInput = document.querySelector("#task-start-time");
+const taskEndTimeInput = document.querySelector("#task-end-time");
 
 /* Estado */
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -171,6 +173,8 @@ function createTask(data) {
     category: data.category,
     priority: data.priority,
     dueDate: data.dueDate,
+    startTime: data.startTime,
+    endTime: data.endTime,
     completed: false,
     createdAt: new Date().toISOString(),
   };
@@ -192,6 +196,8 @@ function editTask(id) {
   taskCategoryInput.value = task.category;
   taskPriorityInput.value = task.priority;
   taskDateInput.value = task.dueDate || "";
+  taskStartTimeInput.value = task.startTime || "";
+  taskEndTimeInput.value = task.endTime || "";
 
   document.querySelector("#modal-title").textContent = "Editar Tarefa";
 
@@ -313,6 +319,9 @@ function renderTasks() {
         <p class="task-date">
           ${formatDate(task.dueDate)}
         </p>
+        <p class="task-time">
+          ${task.startTime || "--:--"} - ${task.endTime || "--:--"}
+        </p>
       </div>
 
       <div class="task-actions">
@@ -364,6 +373,8 @@ taskForm?.addEventListener("submit", (event) => {
     category: taskCategoryInput.value,
     priority: taskPriorityInput.value,
     dueDate: taskDateInput.value,
+    startTime: taskStartTimeInput.value,
+    endTime: taskEndTimeInput.value,
   };
 
   if (editingTaskId !== null) {
